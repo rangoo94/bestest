@@ -1,5 +1,6 @@
 # Bestest - benchmarking tooling
 
+[![CircleCI](https://circleci.com/gh/rangoo94/bestest.svg?style=svg)](https://circleci.com/gh/rangoo94/bestest)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0d074d953394b18ecae9/maintainability)](https://codeclimate.com/github/rangoo94/bestest/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/0d074d953394b18ecae9/test_coverage)](https://codeclimate.com/github/rangoo94/bestest/test_coverage)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)

@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    environment:
+      NODE_ENV: development
+
+    docker:
+      - image: circleci/node:12
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore node_modules cache
+          keys:
+            - v1-node-{{ arch }}-{{ .Branch }}
+            - v1-node-{{ arch }}-
+
+      - run:
+          name: Node.js version
+          command: node --version
+
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      - save_cache:
+          name: Save node_modules cache
+          key: v1-node-{{ arch }}-{{ .Branch }}
+          paths:
+            - node_modules
+            - packages/*/node_modules
+
+      - run:
+          name: Run code linter
+          command: npm run lint
