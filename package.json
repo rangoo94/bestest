@@ -5,6 +5,7 @@
     "postinstall": "lerna bootstrap --hoist",
     "clean": "lerna exec -- npm run clean",
     "build": "lerna exec -- npm run build",
+    "lint": "lerna exec -- npm run lint",
     "test": "lerna exec -- npm test"
   },
   "devDependencies": {
