@@ -1,0 +1,45 @@
+{
+  "name": "@bestest/compiler-none",
+  "version": "1.0.0",
+  "description": "Empty compiler for Bestest benchmarking tool.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./index",
+  "types": "./index.d.ts",
+  "scripts": {
+    "clean": "rimraf lib/**/*.{js,d.ts} index.{js,d.ts}",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "ts-check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run ts-check && npm run lint",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rangoo94/bestest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rangoo94/bestest/issues"
+  },
+  "keywords": [
+    "bestest",
+    "compile",
+    "compiler",
+    "code",
+    "dummy"
+  ],
+  "author": "Dawid Rusnak <dawid@drcode.pl>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^12.7.0",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@bestest/compiler": "^1.0.0"
+  }
+}

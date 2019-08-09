@@ -1,0 +1,6 @@
+interface CompilerOptionsInterface {
+}
+
+export {
+  CompilerOptionsInterface
+}

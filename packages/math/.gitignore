@@ -1,0 +1,6 @@
+# External data
+node_modules
+
+# Build files
+**/*.js
+**/*.d.ts

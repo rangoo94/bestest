@@ -1,0 +1,13 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "postinstall": "lerna bootstrap --hoist",
+    "clean": "lerna exec -- npm run clean",
+    "build": "lerna exec -- npm run build",
+    "test": "lerna exec -- npm test"
+  },
+  "devDependencies": {
+    "lerna": "^3.16.4"
+  }
+}

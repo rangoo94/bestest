@@ -1,0 +1,52 @@
+{
+  "name": "@bestest/execution",
+  "version": "1.0.1",
+  "description": "Execution-related helper functions, required for Bestest benchmarking.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./index",
+  "types": "./index.d.ts",
+  "scripts": {
+    "clean": "rimraf lib/**/*.{js,d.ts} index.{js,d.ts}",
+    "build": "npm run clean && tsc -p ./tsconfig.json",
+    "lint": "tslint -p ./tsconfig.json -c tslint.json",
+    "ts-check": "tsc -p ./tsconfig.json --noEmit",
+    "test": "npm run ts-check && npm run lint",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rangoo94/bestest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rangoo94/bestest/issues"
+  },
+  "keywords": [
+    "bestest",
+    "measure",
+    "measurement",
+    "performance",
+    "time",
+    "stats",
+    "statistics",
+    "benchmark",
+    "benchmarking"
+  ],
+  "author": "Dawid Rusnak <dawid@drcode.pl>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^12.7.0",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@bestest/math": "^1.0.1",
+    "@bestest/task-schedulement": "^1.0.0",
+    "@bestest/time-measurement": "^1.0.1",
+    "@bestest/utils": "^1.0.0"
+  }
+}
