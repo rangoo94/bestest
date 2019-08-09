@@ -87,7 +87,7 @@ const dateNowMethod = new CustomTimeMeasurement({
 const dateMethod = new CustomTimeMeasurement({
   id: 'date-instance',
   name: 'new Date.getTime',
-  check: () => typeof Date !== 'undefined' && typeof Date.now === 'function',
+  check: () => typeof Date !== 'undefined',
   factory: () => {
     const now = Date.now
     return () => now() * 1e9
