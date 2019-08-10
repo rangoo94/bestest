@@ -20,7 +20,6 @@ interface CompilerInterface {
   initialize (callback: (error: any | null) => any): void
 
   /** Compile passed files */
-  // TODO: FIX callback TYPE
   compile (options: Partial<CompilerCompileOptionsInterface>, callback: CompilerCallbackType): void
 }
 
