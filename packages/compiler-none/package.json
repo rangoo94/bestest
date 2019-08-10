@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf lib/**/*.{js,d.ts} index.{js,d.ts}",
     "build": "npm run clean && tsc -p tsconfig.json",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint": "tslint -p tsconfig.json -c ../../tslint.json",
     "ts-check": "tsc -p tsconfig.json --noEmit",
     "test": "npm run ts-check && npm run lint",
     "prepublishOnly": "npm run build"
