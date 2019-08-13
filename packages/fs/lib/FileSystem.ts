@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import MemoryFileSystem = require('memory-fs')
 const UnionFS = require('unionfs')
+import { Volume } from 'memfs'
 import { buildOptions } from '@bestest/utils/lib/buildOptions'
 import { assign } from '@bestest/utils/lib/assign'
 import { FileSystemOptionsInterface } from './interfaces/FileSystemOptionsInterface'
@@ -18,8 +18,8 @@ import { FileInterface } from './interfaces/FileInterface'
  * @class
  */
 class FileSystem implements FileSystemInterface {
-  readonly fs: MemoryFileSystem
-  readonly memoryFs: MemoryFileSystem
+  readonly fs: any // 'Volume' is not supported
+  readonly memoryFs: any // 'Volume' is not supported
   readonly options: FileSystemOptionsInterface
   private readonly _files: Record<string, FileInterface>
 
@@ -56,7 +56,7 @@ class FileSystem implements FileSystemInterface {
     this._files = {}
 
     // Initialize in-memory file system
-    this.memoryFs = new MemoryFileSystem()
+    this.memoryFs = new Volume()
 
     // Initialize exposed file system
     this.fs = new UnionFS.Union()
@@ -143,7 +143,7 @@ class FileSystem implements FileSystemInterface {
    */
   setLocalFile (filePath: string, contents: Buffer | string, publicPath?: string | null): FileInterface {
     // Initialize basic data (and ensure they are correct)
-    const absoluteFilePath = this._getAbsolutePath(filePath)
+    const absoluteFilePath = this.getAbsoluteFilePath(filePath)
     const finalPublicPath = publicPath || this._getPublicPath(absoluteFilePath)
 
     // Initialize file object
@@ -180,7 +180,7 @@ class FileSystem implements FileSystemInterface {
    * @returns {string}
    * @private
    */
-  private _getAbsolutePath (filePath: string): string {
+  getAbsoluteFilePath (filePath: string): string {
     // Ignore when it's already absolute
     if (path.isAbsolute(filePath)) {
       return filePath
@@ -214,6 +214,36 @@ class FileSystem implements FileSystemInterface {
 
       // Replace /../ in path to __
       .replace(/(^|\/)\.\.(\/)/g, '$1__$2')
+  }
+
+  /**
+   * Create equivalent of native FS module,
+   * including all missing features.
+   *
+   * @returns {object}
+   */
+  createNativeEquivalent (): object {
+    const fsCopy = this.clone().fs
+
+    // Copy all native FS properties
+    for (const key in fs) {
+      if (fs.hasOwnProperty(key) && !(key in fsCopy)) {
+        // @ts-ignore
+        fsCopy[key] = fs[key]
+      }
+    }
+
+    // Copy 'promises' implementation from native FS
+    if (fs.promises && fs.promises !== fsCopy.promises) {
+      for (const key in fs.promises) {
+        if (fs.promises.hasOwnProperty(key) && !(key in fsCopy.promises)) {
+          // @ts-ignore
+          fsCopy.promises[key] = fs.promises[key]
+        }
+      }
+    }
+
+    return fsCopy
   }
 }
 

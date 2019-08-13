@@ -1,6 +1,6 @@
 {
   "name": "@bestest/fs",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Internal FS implementation for Bestest benchmarking tool.",
   "publishConfig": {
     "access": "public"
@@ -33,7 +33,6 @@
   "author": "Dawid Rusnak <dawid@drcode.pl>",
   "license": "MIT",
   "devDependencies": {
-    "@types/memory-fs": "^0.3.2",
     "@types/node": "^12.7.0",
     "rimraf": "^2.6.3",
     "ts-node": "^8.3.0",
@@ -43,7 +42,7 @@
   },
   "dependencies": {
     "@bestest/utils": "^1.0.0",
-    "memory-fs": "^0.4.1",
+    "memfs": "^2.15.5",
     "unionfs": "^4.2.0"
   }
 }
