@@ -30,7 +30,7 @@ abstract class CompilerAdapter<OptionsType = Record<string, any>> implements Com
   /**
    * Empty compiler initializer.
    *
-   * @param {function} callback
+   * @param {function(*)} callback
    */
   initialize (callback: (error: any | null) => any) {
     callback(null)
