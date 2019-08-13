@@ -35,6 +35,34 @@ console.log(sandbox2.executeScript('require("./fn").fn()')) // 3
 console.log(require('./fn').fn()) // 3
 ```
 
+### Passing arguments (or callback)
+
+```js
+const { NodeModuleSandbox } = require('@bestest/node-module-sandbox')
+
+const sandbox = new NodeModuleSandbox()
+
+// Remember that this function will be serialized,
+// so you should not use anything from outside of its context.
+const fn = (callback) => {
+  setTimeout(() => {
+    callback(10)    
+  }, 1000)
+}
+
+// Remember that this function will be serialized,
+// so you should not use anything from outside of its context.
+const fn2 = (x, y, z) => {
+    console.log('Sum:', x + y + z)
+}
+
+sandbox.executeScriptWithArguments(fn, value => {
+  console.log('The value is', value)
+})
+
+sandbox.executeScriptWithArguments(fn2, 1, 2, 3)
+```
+
 ### Passing custom file system
 
 ```js
@@ -97,4 +125,5 @@ Unfortunately, there is no API yet available to access and modify ESMLoader.
 
 ## Changelog
 
+- **1.1.0** (on 13.08.2019): add option to pass arguments for executed scripts
 - **1.0.0** (on 13.08.2019): initial version

@@ -1,6 +1,6 @@
 {
   "name": "@bestest/node-module-sandbox",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sandbox Node.js modules along with require function",
   "publishConfig": {
     "access": "public"

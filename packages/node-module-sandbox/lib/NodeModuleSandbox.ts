@@ -69,6 +69,30 @@ class NodeModuleSandbox {
   }
 
   /**
+   * Execute foreign code in sandbox.
+   *
+   * @param {function} fn
+   * @param {Array} args
+   * @returns {*}
+   */
+  executeScriptWithArguments (fn: Function, ...args: Array<any>): any {
+    // Validate passed function
+    if (typeof fn !== 'function') {
+      throw new Error('You need to pass a function for execution.')
+    }
+
+    // @ts-ignore
+    this._entryModule.__temp__ = args
+
+    // Run function with arguments
+    return this._entryModule.exports(`
+      var __temp__ = module.__temp__;
+      delete module.__temp__;
+      (${fn.toString()}).apply(null, __temp__);
+    `)
+  }
+
+  /**
    * Require module in sandbox.
    *
    * @param {string} filePath
