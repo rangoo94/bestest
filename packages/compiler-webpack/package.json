@@ -1,6 +1,6 @@
 {
   "name": "@bestest/compiler-webpack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Webpack compiler for Bestest benchmarking tool.",
   "publishConfig": {
     "access": "public"
@@ -44,8 +44,9 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
+    "memory-fs": "^0.4.1",
     "@bestest/compiler": "^1.0.0",
-    "@bestest/fs": "^1.0.3",
+    "@bestest/fs": "^1.1.0",
     "@bestest/utils": "^1.0.0"
   }
 }

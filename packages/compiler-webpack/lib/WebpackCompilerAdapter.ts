@@ -1,5 +1,6 @@
 import * as path from 'path'
 import * as fs from 'fs'
+import joinPath = require('memory-fs/lib/join')
 import { assign } from '@bestest/utils/lib/assign'
 import { FileSystem } from '@bestest/fs/lib/FileSystem'
 import { CompilerAdapterCompileOptionsInterface } from '@bestest/compiler/lib/interfaces/CompilerAdapterCompileOptionsInterface'
@@ -7,6 +8,36 @@ import { CompilerCallbackType } from '@bestest/compiler/lib/interfaces/CompilerC
 import { CompilerAdapter } from '@bestest/compiler/lib/CompilerAdapter'
 import { WebpackCompilerAdapterOptionsInterface } from './interfaces/WebpackCompilerAdapterOptionsInterface'
 import { buildUniqueName } from './buildUniqueName'
+
+/**
+ * Create FileSystem (@bestest/fs) instance,
+ * which will have `.join` method required by Webpack.
+ *
+ * @param {string} publicPath
+ * @param {string} outputPath
+ * @returns {object}
+ * @private
+ */
+function createFileSystem (publicPath: string, outputPath: string): FileSystem {
+  // Create file system instance
+  const fs = new FileSystem({
+    publicPathPrefix: publicPath,
+    rootDirectory: outputPath,
+    useHostFileSystem: false
+  })
+
+  // Return it back, when it has Webpack 'join' method
+  if (fs.memoryFs.join) {
+    return fs
+  }
+
+  // Create FS proxy, adding `join` method to memoryFs, but not modifying original object
+  const nextFs = Object.create(fs)
+  nextFs.memoryFs = Object.create(nextFs.memoryFs)
+  nextFs.memoryFs.join = joinPath
+
+  return nextFs
+}
 
 /**
  * Bestest Compiler adapter, which uses Webpack.
@@ -44,11 +75,7 @@ class WebpackCompilerAdapter extends CompilerAdapter<WebpackCompilerAdapterOptio
     const outputPath = compiler.options.output.path
 
     // Create virtual FS for output files
-    const output = new FileSystem({
-      publicPathPrefix: publicPath,
-      rootDirectory: outputPath,
-      useHostFileSystem: false
-    })
+    const output = createFileSystem(publicPath, outputPath)
 
     // Extract file system wrappers
     const inputFs = options.fs.fs
