@@ -4,6 +4,7 @@ import Module = require('module')
 import { FsInterface } from './interfaces/FsInterface'
 import { getFilePathResolutionType } from './getFilePathResolutionType'
 import { getIndexFilePath } from './getIndexFilePath'
+import { acceptedScriptExtensions } from './acceptedScriptExtensions'
 
 /**
  * Resolve existing script file path.
@@ -18,7 +19,7 @@ import { getIndexFilePath } from './getIndexFilePath'
 function resolveFilePath (
   filePath: string,
   parentModule: Module,
-  extensions: string[] = [ '.js', '.json' ],
+  extensions: string[] = acceptedScriptExtensions,
   fileSystem: FsInterface = fs,
   allowNoExtension: boolean = true
 ): string | null {

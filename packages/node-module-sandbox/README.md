@@ -125,5 +125,6 @@ Unfortunately, there is no API yet available to access and modify ESMLoader.
 
 ## Changelog
 
+- **1.1.1** (on 13.08.2019): improve list of script extensions for file resolution
 - **1.1.0** (on 13.08.2019): add option to pass arguments for executed scripts
 - **1.0.0** (on 13.08.2019): initial version

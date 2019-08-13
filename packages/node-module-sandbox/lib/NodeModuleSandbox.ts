@@ -5,6 +5,7 @@ import stripBom = require('strip-bom')
 import { buildOptions } from '@bestest/utils/lib/buildOptions'
 import { NodeModuleSandboxOptionsInterface } from './interfaces/NodeModuleSandboxOptionsInterface'
 import { resolveFilePath } from './resolveFilePath'
+import { acceptedScriptExtensions } from './acceptedScriptExtensions'
 
 /**
  * Class to execute code in more sand-boxed and mockable environment.
@@ -159,7 +160,7 @@ class NodeModuleSandbox {
 
     // Resolve script file path
     const fs = this.options.requireFileSystem
-    const resolvedFilePath = resolveFilePath(filePath, parentModule, [ '.js', '.json' ], fs)
+    const resolvedFilePath = resolveFilePath(filePath, parentModule, acceptedScriptExtensions, fs)
 
     // Cache file path if it exists
     if (resolvedFilePath !== null) {
