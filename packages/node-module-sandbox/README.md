@@ -28,7 +28,7 @@ sandbox1.executeScript('require("./fn").fn = () => 5')
 // Verify that './fn' has been modified in "sandbox1"
 console.log(sandbox1.executeScript('require("./fn").fn()')) // 5
 
-// Verify that './fn' has been modified in "sandbox2"
+// Verify that './fn' has not been modified in "sandbox2"
 console.log(sandbox2.executeScript('require("./fn").fn()')) // 3
 
 // Verify that './fn' has not been modified locally
