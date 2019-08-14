@@ -17,7 +17,7 @@ Work in progress...
 - [x] **[Compiler](packages/compiler):** to prepare code for use
 - [x] **[Statistics & formatting utils](packages/math):** to consume function performance information
 - [x] **[Node.js execution sandbox](packages/node-module-sandbox):** to run test code in memory sand-boxed environment, with possibility to mock file system
-- [ ] **Environment / Runner:** run code on different environments automatically
+- [x] **[Runner](packages/runner):** run code on different environments automatically
 - [ ] **Output tools:** output benchmark results in many different ways (HTML, SVG, console)
 - [ ] **Core:** core tooling: test suites and cases, and their factories
 - [ ] **Bestest itself:** to combine all utils 
@@ -27,5 +27,5 @@ Work in progress...
 - [ ] **Documentation**
 - [ ] **Different compilers:** already existing: [Webpack](packages/compiler-webpack), [transparent](packages/compiler-none) one
 - [ ] **Different output tools:** none yet
-- [ ] **Different environment runners:** none yet
+- [ ] **Different environment runners:** already existing: [local](packages/runner-local)
 - [ ] **Check on Windows machines**

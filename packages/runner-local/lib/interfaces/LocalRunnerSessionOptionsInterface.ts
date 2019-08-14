@@ -1,0 +1,7 @@
+interface LocalRunnerSessionOptionsInterface {
+
+}
+
+export {
+  LocalRunnerSessionOptionsInterface
+}
