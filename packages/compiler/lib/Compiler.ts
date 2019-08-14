@@ -2,6 +2,7 @@ import * as path from 'path'
 import { EventEmitter } from 'events'
 import { FileSystemInterface } from '@bestest/fs/lib/interfaces/FileSystemInterface'
 import { FileSystem } from '@bestest/fs/lib/FileSystem'
+import { createDelayedFunction } from '@bestest/utils/lib/createDelayedFunction'
 import { buildOptions } from '@bestest/utils/lib/buildOptions'
 import { assign } from '@bestest/utils/lib/assign'
 import { CompilerAdapterCompileOptionsInterface } from './interfaces/CompilerAdapterCompileOptionsInterface'
@@ -86,28 +87,26 @@ class Compiler implements CompilerInterface {
    * @param {function(object|null)} callback
    */
   initialize (callback: (error: any | null) => any) {
-    this.events.emit('initialize:start')
+    // Delay functions, to ensure that their errors will not affect the flow
+    const emit = createDelayedFunction(this.events.emit.bind(this.events))
+    const call = createDelayedFunction(callback)
 
+    // Inform about initialization process started
+    emit('initialize:start')
+
+    // Emit result back
     const onFinish = (error: any | null) => {
-      this.events.emit('initialize:end', error)
+      emit('initialize:end', error)
+      emit(error === null ? 'initialize:success' : 'initialize:error', error)
 
-      if (error === null) {
-        this.events.emit('initialize:success')
-      } else {
-        this.events.emit('initialize:error', error)
-      }
-
-      callback(error || null)
+      call(error || null)
     }
 
     // Handle synchronous errors and initialize adapter
     try {
       this.adapter.initialize(onFinish)
     } catch (error) {
-      this.events.emit('initialize:end', error)
-      this.events.emit('initialize:error', error)
-
-      callback(error)
+      onFinish(error || new Error())
     }
   }
 
@@ -119,6 +118,10 @@ class Compiler implements CompilerInterface {
    * @param callback
    */
   compile (options: Partial<CompilerCompileOptionsInterface>, callback: CompilerCallbackType) {
+    // Delay functions, to ensure that their errors will not affect the flow
+    const emit = createDelayedFunction(this.events.emit.bind(this.events))
+    const call = createDelayedFunction(callback)
+
     // Validate callback
     if (typeof callback !== 'function') {
       throw new Error('Invalid callback passed for Compiler.compile.')
@@ -144,7 +147,7 @@ class Compiler implements CompilerInterface {
     }
 
     // Emit 'start' event
-    this.events.emit('compile:start', { compiler, options: finalOptions })
+    emit('compile:start', { compiler, options: finalOptions })
 
     // Wrap callback, to emit finish events
     const onFinish: CompilerCallbackType = (
@@ -152,27 +155,17 @@ class Compiler implements CompilerInterface {
       fs: FileSystemInterface | null,
       entries: string[] | null
     ) => {
-      this.events.emit('compile:end', { compiler, error, fs, entries })
+      emit('compile:end', { compiler, error, fs, entries })
+      emit(error === null ? 'compile:success' : 'compile:error', { compiler, error, fs, entries })
 
-      if (error === null) {
-        this.events.emit('compile:success', { compiler, fs, entries })
-      } else {
-        this.events.emit('compile:error', { error, compiler })
-      }
-
-      callback(error, fs, entries)
+      call(error, fs, entries)
     }
 
     // Handle synchronous errors in adapter compilation process
     try {
       this.adapter.compile(adapterCompileOptions, onFinish)
     } catch (error) {
-      const finalError = { error, filePath: null, details: null }
-
-      this.events.emit('compile:end', { compiler, error, fs: null, entries: null })
-      this.events.emit('compile:error', { error, compiler })
-
-      onFinish(finalError, null, null)
+      onFinish({ error: error || new Error(), filePath: null, details: null }, null, null)
     }
   }
 

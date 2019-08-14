@@ -1,6 +1,6 @@
 {
   "name": "@bestest/compiler",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Compiler part of Bestest benchmarking tool - compile your code in memory to run on different environments.",
   "publishConfig": {
     "access": "public"
@@ -54,6 +54,6 @@
     "@bestest/math": "^1.0.1",
     "@bestest/task-schedulement": "^1.0.0",
     "@bestest/time-measurement": "^1.0.1",
-    "@bestest/utils": "^1.0.0"
+    "@bestest/utils": "^1.1.1"
   }
 }

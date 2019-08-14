@@ -77,5 +77,6 @@ compiler.initialize(error => {
 
 ## Changelog
 
+* **1.0.2** (on 2019-08-14): delay events & callbacks, to ensure that flow will work even despite errors
 * **1.0.1** (on 2019-08-09): fix Webpack adapter link in README file
 * **1.0.0** (on 2019-08-09): initial version
