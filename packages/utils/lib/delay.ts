@@ -1,18 +1,13 @@
-// Select possible options for delay
-const nextTick = typeof process === 'object' && typeof process.nextTick === 'function' ? process.nextTick : null
-const microtask = typeof queueMicrotask === 'function' ? queueMicrotask : null
-const timeout = typeof setTimeout === 'function' ? setTimeout : null
-
-// Choose most proper method
-const method = (nextTick || microtask || timeout) as (fn: Function) => any
+import { createDelayedFunction } from './createDelayedFunction'
 
 /**
  * Delay function execution.
  *
  * @param {function} fn
+ * @param {Array} args
  */
-function delay (fn: () => void): void {
-  method(fn)
+function delay<ArgsType extends any[]> (fn: (...args: ArgsType) => any, ...args: ArgsType): void {
+  createDelayedFunction(fn)(...args)
 }
 
 export {
