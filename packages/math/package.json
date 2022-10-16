@@ -32,6 +32,9 @@
   ],
   "author": "Dawid Rusnak <dawid@drcode.pl>",
   "license": "MIT",
+  "dependencies": {
+    "quickselect": "^2.0.0"
+  },
   "devDependencies": {
     "@types/node": "^12.7.0",
     "rimraf": "^2.6.3",

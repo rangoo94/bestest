@@ -16,13 +16,13 @@ function getStackTrace (omittedFunctionNames: string[] = []): StackTraceFrameInt
 
   // Iterate over functions to remove internals
   for (let i = startIndex; i < stackTrace.length; i++) {
-    if (omittedFunctionNames.indexOf(stackTrace[i].functionName) !== -1) {
+    if (omittedFunctionNames.indexOf(stackTrace[i]?.functionName!) !== -1) {
       startIndex = i + 1
     }
   }
 
   // Return back stack trace, ignoring internal frames
-  return stackTrace.slice(startIndex)
+  return (stackTrace as any).slice(startIndex)
 }
 
 export {

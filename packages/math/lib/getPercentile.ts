@@ -1,4 +1,5 @@
-import { sortValues } from './sortValues'
+// @ts-ignore: missing declarations
+import quickSelect = require('quickselect')
 
 /**
  * Select expected percentile from values array.
@@ -9,15 +10,16 @@ import { sortValues } from './sortValues'
  * @returns {number}
  */
 function getPercentile (percentile: number, values: number[], isSorted: boolean = false): number {
-  // Sort array, if it's not sorted yet (ASC)
-  if (!isSorted) {
-    values = sortValues(values.slice())
-  }
-
   // Calculate index
   const index = getPercentileIndex(percentile, values)
 
+  // Sort array, if it's not sorted yet (ASC)
+  if (isSorted) {
+    return +values[index]
+  }
+
   // Get proper percentile
+  quickSelect(values, index)
   return +values[index]
 }
 
