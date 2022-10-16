@@ -11,13 +11,10 @@ function getStandardDeviation (values: number[]): number {
   const average = getAverage(values)
 
   // Calculate (diffs against average)^2
-  const squareDiffs = values.map(value => Math.pow(value - average, 2))
-
-  // Get average diff^2
-  const averageSquareDiff = getAverage(squareDiffs)
+  const squareDiffsSum = values.reduce((acc, value) => acc + Math.pow(value - average, 2), 0)
 
   // Get square root of average diff^2
-  return Math.sqrt(averageSquareDiff)
+  return Math.sqrt(squareDiffsSum / values.length)
 }
 
 export {
