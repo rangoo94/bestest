@@ -186,6 +186,7 @@ class NodeModuleSandbox {
     // Set-up its data
     childModule.id = filePath
     childModule.paths = parentModule.paths
+    /* tslint:disable-next-line */
     childModule.parent = parentModule
     // @ts-ignore
     childModule.path = path.dirname(filePath)
