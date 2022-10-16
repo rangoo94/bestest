@@ -1,6 +1,6 @@
 {
   "name": "@bestest/math",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Math-related helper functions, required for benchmarking.",
   "publishConfig": {
     "access": "public"
